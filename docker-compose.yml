@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  voice-agent:
+    build: .
+    container_name: voice-agent
+    ports:
+      - "8000:8000"
+    environment:
+      - CARTESIA_API_KEY
+      - RIME_API_KEY
+      - ELEVEN_API_KEY
+      - DEEPGRAM_API_KEY
+      - LIVEKIT_API_KEY
+      - LIVEKIT_API_SECRET
+      - LIVEKIT_URL
+      - OPENAI_API_KEY
+      - LANGSMITH_PROJECT
+      - LANGCHAIN_TRACING_V2
+      - LANGCHAIN_ENDPOINT
+      - LANGSMITH_API_KEY
+    env_file:
+      - .env.local
+    volumes:
+      - .:/app
+    command: ["sh", "-c", "python3 agent.py download-files && python3 agent.py dev"]
